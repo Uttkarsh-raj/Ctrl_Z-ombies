@@ -8,7 +8,7 @@ class SearchWidget extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
         height: size.height * 0.06,
-        width: size.width * 0.92,
+        width: size.width * 0.93,
         decoration: BoxDecoration(
           color: Colors.grey[200],
           borderRadius: BorderRadius.circular(25),
@@ -19,7 +19,7 @@ class SearchWidget extends StatelessWidget {
             child: TextField(
               autocorrect: true,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 10),
+                contentPadding: EdgeInsets.only(left: 13),
                 border: InputBorder.none,
                 suffixIcon: Icon(Icons.search),
                 suffixIconColor: Colors.grey,
