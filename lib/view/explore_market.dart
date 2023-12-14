@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hackathon/const/colors.dart';
+import 'package:hackathon/widgets/market_widget.dart';
+import 'package:http/http.dart' as http;
 
 class ExploreMarketPlace extends StatefulWidget {
   const ExploreMarketPlace({super.key});
@@ -9,6 +13,29 @@ class ExploreMarketPlace extends StatefulWidget {
 }
 
 class _ExploreMarketPlaceState extends State<ExploreMarketPlace> {
+  bool loaded = false;
+  List<dynamic> data = [];
+  void getData() async {
+    setState(() {
+      loaded = false;
+    });
+    var res = await http.get(
+      Uri.parse('https://gramsarthi.vercel.app/api/products/rampur'),
+    );
+    var k = jsonDecode(res.body);
+    data = k["data"];
+    print(data);
+    setState(() {
+      loaded = true;
+    });
+  }
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -40,89 +67,29 @@ class _ExploreMarketPlaceState extends State<ExploreMarketPlace> {
                   // color:
                 ),
               ),
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 0.0,
-                  mainAxisSpacing: 0.0,
-                  childAspectRatio: size.height * 0.001,
-                ),
-                itemCount: 4,
-                itemBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: size.height * 0.23,
-                    width: size.width * 0.36,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: size.height * 0.15,
-                          width: size.width * 0.8,
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(12),
-                              topRight: Radius.circular(12),
-                            ),
-                            child: Image.asset(
-                              'assets/images/john doe.jpeg',
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+              (loaded)
+                  ? GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 0.0,
+                        mainAxisSpacing: 0.0,
+                        childAspectRatio: size.height * 0.001,
+                      ),
+                      itemCount: data.length,
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: MarketWidget(
+                          url: data[index]['image'].toString(),
+                          name: data[index]['name'].toString(),
+                          price: data[index]['price'].toString(),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    'Coffee',
-                                    style: TextStyle(
-                                      color: AppColors.blue,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Text(
-                                    '₹ 100',
-                                    style: TextStyle(
-                                      color: AppColors.blue,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.orange,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Icon(
-                                    Icons.shopping_bag_outlined,
-                                    size: 25,
-                                    color: AppColors.white,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
+                      ),
+                    )
+                  : const Center(
+                      child: CircularProgressIndicator(),
                     ),
-                  ),
-                ),
-              )
             ],
           ),
         ),

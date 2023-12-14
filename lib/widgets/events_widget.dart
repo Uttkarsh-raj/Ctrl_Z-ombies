@@ -12,16 +12,17 @@ class EventsListTile extends StatelessWidget {
       height: size.height * 0.15,
       width: size.width * 0.40,
       decoration: BoxDecoration(
-          color: Colors.grey[200],
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              offset: const Offset(1, 1),
-              color: Colors.black.withOpacity(0.8),
-              blurRadius: 8,
-              spreadRadius: 0.1,
-            )
-          ]),
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            offset: const Offset(1, 1),
+            color: Colors.black.withOpacity(0.8),
+            blurRadius: 8,
+            spreadRadius: 0.1,
+          )
+        ],
+      ),
       child: Stack(
         children: [
           SizedBox(
@@ -30,7 +31,7 @@ class EventsListTile extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(18),
               child: Image.network(
-                'https://images.yourstory.com/cs/wordpress/2018/07/rendered.jpg',
+                icon,
                 fit: BoxFit.cover,
               ),
             ),
@@ -50,7 +51,7 @@ class EventsListTile extends StatelessWidget {
           Positioned(
             bottom: 0,
             child: Container(
-              height: size.height * 0.05,
+              height: size.height * 0.055,
               width: size.width * 0.40,
               decoration: BoxDecoration(
                 color: AppColors.white.withOpacity(0),
@@ -61,13 +62,14 @@ class EventsListTile extends StatelessWidget {
                   top: 3,
                   bottom: 3,
                 ),
-                child: const Center(
+                child: Center(
                   child: Text(
-                    'Indian Craft',
-                    style: TextStyle(
+                    label,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
                       fontWeight: FontWeight.w900,
                       color: AppColors.white,
-                      fontSize: 18,
+                      fontSize: 16,
                       // color:
                     ),
                   ),

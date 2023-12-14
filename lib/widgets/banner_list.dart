@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BannersListTile extends StatelessWidget {
-  final String imageUrl;
-  const BannersListTile({super.key, required this.imageUrl});
+  final String imageUrl, name;
+  const BannersListTile(
+      {super.key, required this.imageUrl, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +68,9 @@ class BannersListTile extends StatelessWidget {
           Positioned(
             bottom: size.height * 0.1,
             left: size.width * 0.03,
-            child: const Text(
-              'Indian Craft',
-              style: TextStyle(
+            child: Text(
+              name,
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 22,
                 fontWeight: FontWeight.w700,

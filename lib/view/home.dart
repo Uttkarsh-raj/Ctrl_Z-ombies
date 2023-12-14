@@ -1,14 +1,20 @@
+import 'dart:convert';
+
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:hackathon/const/colors.dart';
+import 'package:hackathon/view/contact.dart';
 import 'package:hackathon/view/eplore_emp.dart';
 import 'package:hackathon/view/explore_market.dart';
+import 'package:hackathon/view/inventory.dart';
+import 'package:hackathon/view/schedule.dart';
 import 'package:hackathon/widgets/banner_list.dart';
 import 'package:hackathon/widgets/events_widget.dart';
 import 'package:hackathon/widgets/explore_widget.dart';
 import 'package:hackathon/widgets/grey_space.dart';
 import 'package:hackathon/widgets/panchayat_list.dart';
 import 'package:hackathon/widgets/search_widget.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,6 +36,30 @@ class _HomePageState extends State<HomePage> {
     'assets/icons/contacts.png',
     'assets/icons/calendar.png',
   ];
+  dynamic data;
+  bool loaded = false;
+
+  void getEvents() async {
+    setState(() {
+      loaded = false;
+    });
+    var res = await http.get(
+      Uri.parse('https://gramsarthi.vercel.app/api/events/rampur'),
+    );
+    var d = jsonDecode(res.body);
+    data = d["data"];
+    print(data);
+    setState(() {
+      loaded = true;
+    });
+  }
+
+  @override
+  void initState() {
+    getEvents();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -87,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                                       size: 14,
                                     ),
                                     Text(
-                                      'Uttar Pradesh',
+                                      'Rampur',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         color: AppColors.blue,
@@ -121,26 +151,28 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     SizedBox(height: size.height * 0.015),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.23,
-                      child: Swiper(
-                        itemCount: 3,
-                        autoplay: true,
-                        itemBuilder: (context, index) {
-                          return const BannersListTile(
-                            imageUrl:
-                                'https://images.yourstory.com/cs/wordpress/2018/07/rendered.jpg',
-                          );
-                        },
-                        pagination: const SwiperPagination(
-                          alignment: Alignment.bottomCenter,
-                          builder: DotSwiperPaginationBuilder(
-                            activeColor: Colors.red,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
+                    (loaded)
+                        ? SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.23,
+                            child: Swiper(
+                              itemCount: 3,
+                              autoplay: true,
+                              itemBuilder: (context, index) {
+                                return BannersListTile(
+                                  imageUrl: data[index]['image'],
+                                  name: data[index]['name'],
+                                );
+                              },
+                              pagination: const SwiperPagination(
+                                alignment: Alignment.bottomCenter,
+                                builder: DotSwiperPaginationBuilder(
+                                  activeColor: Colors.red,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          )
+                        : const Center(child: CircularProgressIndicator()),
                     SizedBox(height: size.height * 0.01),
                   ],
                 ),
@@ -194,6 +226,27 @@ class _HomePageState extends State<HomePage> {
                           child: PanchayatList(
                             icon: icons[index],
                             label: labels[index],
+                            onTap: () {
+                              if (index == 1) {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const Inventory(),
+                                  ),
+                                );
+                              } else if (index == 2) {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const ContactsPage(),
+                                  ),
+                                );
+                              } else if (index == 3) {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const Schedules(),
+                                  ),
+                                );
+                              }
+                            },
                           ),
                         ),
                         separatorBuilder: (context, index) =>
@@ -227,44 +280,48 @@ class _HomePageState extends State<HomePage> {
                             // color:
                           ),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              'View All',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.blue,
-                                fontSize: 14,
-                                // color:
-                              ),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_outlined,
-                              color: AppColors.blue,
-                              size: 16,
-                            ),
-                          ],
-                        )
+                        // Row(
+                        //   children: [
+                        //     Text(
+                        //       'View All',
+                        //       style: TextStyle(
+                        //         fontWeight: FontWeight.w500,
+                        //         color: AppColors.blue,
+                        //         fontSize: 14,
+                        //         // color:
+                        //       ),
+                        //     ),
+                        //     Icon(
+                        //       Icons.arrow_forward_outlined,
+                        //       color: AppColors.blue,
+                        //       size: 16,
+                        //     ),
+                        //   ],
+                        // )
                       ],
                     ),
                     SizedBox(height: size.height * 0.015),
-                    SizedBox(
-                      height: size.height * 0.145,
-                      child: ListView.separated(
-                        itemBuilder: (context, index) => Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: EventsListTile(
-                            icon: icons[index],
-                            label: labels[index],
+                    (loaded)
+                        ? SizedBox(
+                            height: size.height * 0.145,
+                            child: ListView.separated(
+                              itemBuilder: (context, index) => Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: EventsListTile(
+                                  icon: data[index]['image'],
+                                  label: data[index]['name'],
+                                ),
+                              ),
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(width: 10),
+                              itemCount: 4,
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                            ),
+                          )
+                        : const Center(
+                            child: CircularProgressIndicator(),
                           ),
-                        ),
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(width: 10),
-                        itemCount: 4,
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                      ),
-                    ),
                     SizedBox(height: size.height * 0.015),
                   ],
                 ),
