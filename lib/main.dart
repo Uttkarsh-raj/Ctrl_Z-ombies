@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hackathon/view/eplore_emp.dart';
 import 'package:hackathon/view/home.dart';
 
 void main() {
@@ -13,12 +14,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Ctrl+Z-ombies',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       home: const HomePage(),
+      // home: const ExploreEmployment(),
     );
   }
 }

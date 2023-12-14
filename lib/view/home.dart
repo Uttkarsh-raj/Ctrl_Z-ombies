@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hackathon/const/colors.dart';
 import 'package:hackathon/widgets/banner_list.dart';
 import 'package:hackathon/widgets/events_widget.dart';
+import 'package:hackathon/widgets/explore_widget.dart';
 import 'package:hackathon/widgets/grey_space.dart';
 import 'package:hackathon/widgets/panchayat_list.dart';
 import 'package:hackathon/widgets/search_widget.dart';
@@ -307,23 +308,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     SizedBox(height: size.height * 0.015),
-                    SizedBox(
-                      height: size.height * 0.135,
-                      child: ListView.separated(
-                        itemBuilder: (context, index) => Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: PanchayatList(
-                            icon: icons[index],
-                            label: labels[index],
-                          ),
-                        ),
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(width: 10),
-                        itemCount: 4,
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                      ),
-                    ),
+                    const ExploreAndAddWidget(),
                     SizedBox(height: size.height * 0.015),
                   ],
                 ),
@@ -369,28 +354,11 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     SizedBox(height: size.height * 0.015),
-                    SizedBox(
-                      height: size.height * 0.135,
-                      child: ListView.separated(
-                        itemBuilder: (context, index) => Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: PanchayatList(
-                            icon: icons[index],
-                            label: labels[index],
-                          ),
-                        ),
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(width: 10),
-                        itemCount: 4,
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                      ),
-                    ),
+                    const ExploreAndAddWidget(),
                     SizedBox(height: size.height * 0.015),
                   ],
                 ),
               ),
-              EventsListTile(icon: "", label: ""),
               SizedBox(height: size.height * 0.015),
             ],
           ),
