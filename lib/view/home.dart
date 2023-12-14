@@ -6,7 +6,7 @@ import 'package:hackathon/const/colors.dart';
 import 'package:hackathon/view/contact.dart';
 import 'package:hackathon/view/eplore_emp.dart';
 import 'package:hackathon/view/explore_market.dart';
-import 'package:hackathon/view/form.dart';
+import 'package:hackathon/view/grievances/greivances.dart';
 import 'package:hackathon/view/inventory.dart';
 import 'package:hackathon/view/schedule.dart';
 import 'package:hackathon/widgets/banner_list.dart';
@@ -231,7 +231,8 @@ class _HomePageState extends State<HomePage> {
                               if (index == 0) {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) => const FormPage(),
+                                    builder: (context) =>
+                                        const GrievancesPage(),
                                   ),
                                 );
                               } else if (index == 1) {

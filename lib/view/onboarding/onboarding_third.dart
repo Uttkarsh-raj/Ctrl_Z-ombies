@@ -27,7 +27,7 @@ class OnboardinngThird extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Sarathi',
+                    'Saarthi',
                     style: TextStyle(
                       color: AppColors.blue,
                       fontSize: 28,
@@ -41,7 +41,7 @@ class OnboardinngThird extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: Image.asset(
-                  'assets/images/on1.png',
+                  'assets/images/on3.png',
                   height: size.height * 0.47,
                 ),
               ),

@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hackathon/const/colors.dart';
 import 'package:hackathon/widgets/form_fields.dart';
+import 'package:http/http.dart' as http;
 
 class FormPage extends StatefulWidget {
   const FormPage({super.key});
@@ -22,6 +25,42 @@ class _FormPageState extends State<FormPage> {
   List<String> cases = [];
   List<String> courts = [];
 
+//   {
+//   "title":"Broken Road",
+//   "desc":"Road in rajajipuram is broken",
+//   "image":"https://images.unsplash.com/photo-1617252820859-00a22c77ec0c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnJva2VuJTIwcm9hZHxlbnwwfHwwfHx8MA%3D%3D",
+//   "place":"rajajipuram",
+//   "by":"Akash",
+//   "villageName":"rampur",
+//   "user":"1234567"
+// }
+
+  void sendRequest(
+    String title,
+    String description,
+    String place,
+    String name,
+    String village,
+  ) async {
+    var res = await http.post(
+      Uri.parse("https://gramsarthi.vercel.app/api/complaints"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+        "title": title,
+        "desc": description,
+        "image":
+            "https://images.unsplash.com/photo-1617252820859-00a22c77ec0c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnJva2VuJTIwcm9hZHxlbnwwfHwwfHx8MA%3D%3D",
+        "place": place,
+        "by": name,
+        "villageName": village,
+        "user": "1234567",
+      }),
+    );
+    print(res.statusCode);
+  }
+
   @override
   void dispose() {
     nameController.dispose();
@@ -42,82 +81,13 @@ class _FormPageState extends State<FormPage> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          'Form',
+          'Grievances',
           style: TextStyle(
             color: AppColors.black,
             fontSize: 18,
             fontWeight: FontWeight.w700,
           ),
         ),
-        // actions: [
-        //   GestureDetector(
-        //     onTap: () {
-        //       // if (nameController.text.isNotEmpty &&
-        //       //     emailController.text.isNotEmpty &&
-        //       //     contactController.text.isNotEmpty &&
-        //       //     cityController.text.isNotEmpty &&
-        //       //     addressController.text.isNotEmpty) {
-        //       //   if (!isChecked) {
-        //       //     print('register');
-        //       //     UserApiHandler.registerUser(
-        //       //       nameController.text.toString().trim(),
-        //       //       emailController.text.toString().trim(),
-        //       //       contactController.text.toString().trim(),
-        //       //       user.photoURL.toString().trim(),
-        //       //     );
-        //       //     Navigator.of(context).push(
-        //       //       MaterialPageRoute(
-        //       //         builder: (context) => const MainAuthPage(),
-        //       //       ),
-        //       //     );
-        //       //   } else {
-        //       //     //TODO: Show Snackbar...
-        //       //   }
-        //       // }
-        //       // if (isChecked) {
-        //       //   if (nameController.text.isNotEmpty &&
-        //       //       emailController.text.isNotEmpty &&
-        //       //       emailController.text.isNotEmpty &&
-        //       //       emailController.text.isNotEmpty &&
-        //       //       emailController.text.isNotEmpty &&
-        //       //       emailController.text.isNotEmpty &&
-        //       //       descController.text.isNotEmpty) {
-        //       //     LawyerApiHandler.registerLawyer(
-        //       //       user.photoURL.toString().trim(),
-        //       //       calendlyLinkController.text.toString().trim(),
-        //       //       nameController.text.toString().trim(),
-        //       //       emailController.text.toString().trim(),
-        //       //       addressController.text.toString().trim(),
-        //       //       cityController.text.toString().trim(),
-        //       //       regNoController.text.toString().trim(),
-        //       //       cases,
-        //       //       courts,
-        //       //       contactController.text.toString().trim(),
-        //       //       descController.text.toString().trim(),
-        //       //     );
-        //       //     Navigator.of(context).push(
-        //       //       MaterialPageRoute(
-        //       //         builder: (context) => const MainAuthPage(),
-        //       //       ),
-        //       //     );
-        //       //   } else {
-        //       //     //TODO: Show Snackbar...
-        //       //   }
-        //       // }
-        //     },
-        //     child: Padding(
-        //       padding: const EdgeInsets.all(8.0),
-        //       child: Text(
-        //         'Submit',
-        //         style: TextStyle(
-        //           color: AppColors.black.withOpacity(0.8),
-        //           fontSize: 14,
-        //           fontWeight: FontWeight.w600,
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -127,25 +97,25 @@ class _FormPageState extends State<FormPage> {
               FormFields(
                 controller: nameController,
                 title: 'Name',
-                hint: (nameController.text.isEmpty) ? 'Name' : null,
+                hint: 'Name',
               ),
               const SizedBox(height: 13),
               FormFields(
                 controller: emailController,
                 title: 'Email',
-                hint: (emailController.text.isEmpty) ? 'Email' : null,
+                hint: 'Email',
               ),
               const SizedBox(height: 13),
               FormFields(
                 controller: contactController,
                 title: 'Contact',
-                hint: (contactController.text.isEmpty) ? 'Contact' : null,
+                hint: 'Contact',
               ),
               const SizedBox(height: 13),
               FormFields(
                 controller: cityController,
                 title: 'Title',
-                hint: (cityController.text.isEmpty) ? 'Title' : null,
+                hint: 'Title',
               ),
               const SizedBox(height: 13),
               Row(
@@ -173,7 +143,7 @@ class _FormPageState extends State<FormPage> {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
                         child: TextField(
-                          controller: addressController,
+                          controller: descController,
                           decoration: const InputDecoration(
                             hintText: 'Description',
                             hintStyle:
@@ -187,20 +157,66 @@ class _FormPageState extends State<FormPage> {
                 ],
               ),
               SizedBox(height: size.height * 0.1),
-              Container(
-                height: size.height * 0.07,
-                width: size.width * 0.92,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 233, 142, 90),
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: const Center(
-                  child: Text(
-                    'Submit',
-                    style: TextStyle(
-                      color: AppColors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+              GestureDetector(
+                onTap: () {
+                  if (nameController.text.isNotEmpty &&
+                      emailController.text.isNotEmpty &&
+                      contactController.text.isNotEmpty &&
+                      cityController.text.isNotEmpty &&
+                      descController.text.isNotEmpty) {
+                    sendRequest(
+                        cityController.text.trim().toString(),
+                        descController.text.trim().toString(),
+                        "Rampur",
+                        nameController.text.trim().toString(),
+                        "Rampur");
+                    nameController.text = "";
+                    emailController.text = "";
+                    contactController.text = "";
+                    cityController.text = "";
+                    descController.text = "";
+                    SnackBar snackBar = const SnackBar(
+                      backgroundColor: Colors.green,
+                      content: Text(
+                        'Grievance filed successfully !!',
+                        style: TextStyle(
+                          color: AppColors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  } else {
+                    SnackBar snackBar = const SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text(
+                        'Insufficient data !!',
+                        style: TextStyle(
+                          color: AppColors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                },
+                child: Container(
+                  height: size.height * 0.07,
+                  width: size.width * 0.92,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 254, 130, 58),
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Submit',
+                      style: TextStyle(
+                        color: AppColors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ),

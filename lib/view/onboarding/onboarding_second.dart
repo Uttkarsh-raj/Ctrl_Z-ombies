@@ -32,7 +32,7 @@ class _OnBoardingSecondState extends State<OnBoardingSecond> {
                     ),
                   ),
                   Text(
-                    'Sarathi',
+                    'Saarthi',
                     style: TextStyle(
                       color: AppColors.blue,
                       fontSize: 28,

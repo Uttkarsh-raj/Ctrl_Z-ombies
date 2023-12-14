@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon/const/colors.dart';
-import 'package:hackathon/view/form.dart';
+import 'package:hackathon/view/grievances/form.dart';
 
 class ExploreAndAddWidget extends StatelessWidget {
   const ExploreAndAddWidget({super.key, required this.onTap});

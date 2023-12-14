@@ -27,7 +27,7 @@ class OnBoardinngFirst extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Sarathi',
+                    'Saarthi',
                     style: TextStyle(
                       color: AppColors.blue,
                       fontSize: 28,
