@@ -2,6 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:hackathon/const/colors.dart';
 import 'package:hackathon/widgets/banner_list.dart';
+import 'package:hackathon/widgets/events_widget.dart';
 import 'package:hackathon/widgets/grey_space.dart';
 import 'package:hackathon/widgets/panchayat_list.dart';
 import 'package:hackathon/widgets/search_widget.dart';
@@ -245,11 +246,11 @@ class _HomePageState extends State<HomePage> {
                     ),
                     SizedBox(height: size.height * 0.015),
                     SizedBox(
-                      height: size.height * 0.135,
+                      height: size.height * 0.145,
                       child: ListView.separated(
                         itemBuilder: (context, index) => Padding(
                           padding: const EdgeInsets.all(5.0),
-                          child: PanchayatList(
+                          child: EventsListTile(
                             icon: icons[index],
                             label: labels[index],
                           ),
@@ -389,6 +390,8 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
+              EventsListTile(icon: "", label: ""),
+              SizedBox(height: size.height * 0.015),
             ],
           ),
         ),
