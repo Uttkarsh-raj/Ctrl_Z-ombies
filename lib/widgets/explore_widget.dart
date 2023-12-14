@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon/const/colors.dart';
-import 'package:hackathon/view/eplore_emp.dart';
 
 class ExploreAndAddWidget extends StatelessWidget {
-  const ExploreAndAddWidget({super.key});
+  const ExploreAndAddWidget({super.key, required this.onTap});
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +14,7 @@ class ExploreAndAddWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const ExploreEmployment(),
-                ),
-              );
-            },
+            onTap: onTap,
             child: Container(
               height: size.height * 0.13,
               width: size.width * 0.4,

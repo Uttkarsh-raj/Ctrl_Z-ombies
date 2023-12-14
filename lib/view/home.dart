@@ -1,6 +1,8 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:hackathon/const/colors.dart';
+import 'package:hackathon/view/eplore_emp.dart';
+import 'package:hackathon/view/explore_market.dart';
 import 'package:hackathon/widgets/banner_list.dart';
 import 'package:hackathon/widgets/events_widget.dart';
 import 'package:hackathon/widgets/explore_widget.dart';
@@ -308,7 +310,15 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     SizedBox(height: size.height * 0.015),
-                    const ExploreAndAddWidget(),
+                    ExploreAndAddWidget(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const ExploreEmployment(),
+                          ),
+                        );
+                      },
+                    ),
                     SizedBox(height: size.height * 0.015),
                   ],
                 ),
@@ -354,7 +364,15 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     SizedBox(height: size.height * 0.015),
-                    const ExploreAndAddWidget(),
+                    ExploreAndAddWidget(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const ExploreMarketPlace(),
+                          ),
+                        );
+                      },
+                    ),
                     SizedBox(height: size.height * 0.015),
                   ],
                 ),

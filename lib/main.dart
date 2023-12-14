@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hackathon/view/eplore_emp.dart';
 import 'package:hackathon/view/home.dart';
 
 void main() {
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const HomePage(),
-      // home: const ExploreEmployment(),
+      // home: const ExploreMarketPlace(),
     );
   }
 }
