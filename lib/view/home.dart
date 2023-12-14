@@ -6,6 +6,7 @@ import 'package:hackathon/const/colors.dart';
 import 'package:hackathon/view/contact.dart';
 import 'package:hackathon/view/eplore_emp.dart';
 import 'package:hackathon/view/explore_market.dart';
+import 'package:hackathon/view/form.dart';
 import 'package:hackathon/view/inventory.dart';
 import 'package:hackathon/view/schedule.dart';
 import 'package:hackathon/widgets/banner_list.dart';
@@ -101,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'John Doe',
+                                  'Rajesh Sharma',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     color: AppColors.blue,
@@ -227,7 +228,13 @@ class _HomePageState extends State<HomePage> {
                             icon: icons[index],
                             label: labels[index],
                             onTap: () {
-                              if (index == 1) {
+                              if (index == 0) {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const FormPage(),
+                                  ),
+                                );
+                              } else if (index == 1) {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => const Inventory(),

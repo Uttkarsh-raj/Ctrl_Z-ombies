@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   card_swiper: ^3.0.1
   http: ^1.1.0
+  smooth_page_indicator: ^1.1.0
+  wave: ^0.2.2
 
 dev_dependencies:
   flutter_test:
